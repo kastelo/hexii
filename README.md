@@ -42,32 +42,32 @@ HexII instead compresses zeroes, highlights the nonzero data more clearly,
 and shows only ASCII when appropriate:
 
 ```
-      0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f
+       0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f
 
-000: cf fa ed fe 07       01 03       80 02
- 10: 12          08 07       85    .
- 20: 19          .H          ._ ._ .P .A .G .E .Z .E
- 30: .R .O
- 40:             01
-060:                         19          .( 02
- 70: ._ ._ .T .E .X .T
- 80:             01             .P
- 90:                            .P
- a0: 07          05          06
- b0: ._ ._ .t .e .x .t
- c0: ._ ._ .T .E .X .T
- d0: 94 0e       01          99 .5
- e0: 94 0e       02
- f0:    04    80
-100: ._ ._ .s .t .u .b .s
- 10: ._ ._ .T .E .X .T
- 20: .. .D       01          c8 01
- 30: .. .D       01
- 40: 08 04    80             06
- 50: ._ ._ .s .t .u .b ._ .h .e .l .p .e .r
- 60: ._ ._ .T .E .X .T
- 70: f8 .E       01          08 03
- 80: ]
+0000: cf fa ed fe 07       01 03       80 02
+  10: 12          08 07       85    .
+  20: 19          .H          ._ ._ .P .A .G .E .Z .E
+  30: .R .O
+  40:             01
+0060:                         19          .( 02
+  70: ._ ._ .T .E .X .T
+  80:             01             .P
+  90:                            .P
+  a0: 07          05          06
+  b0: ._ ._ .t .e .x .t
+  c0: ._ ._ .T .E .X .T
+  d0: 94 0e       01          99 .5
+  e0: 94 0e       02
+  f0:    04    80
+ 100: ._ ._ .s .t .u .b .s
+  10: ._ ._ .T .E .X .T
+  20: .. .D       01          c8 01
+  30: .. .D       01
+  40: 08 04    80             06
+  50: ._ ._ .s .t .u .b ._ .h .e .l .p .e .r
+  60: ._ ._ .T .E .X .T
+  70: f8 .E       01          08 03
+  80: ]
 ```
 
 ## Rules

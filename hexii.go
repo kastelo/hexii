@@ -6,53 +6,46 @@ import (
 	"io"
 )
 
-// Dump returns a HexII formatted string representing the given data. The
-// width parameter sets the number of input bytes printed on each line.
-func Dump(data []byte, width int) string {
-	if width < 1 {
-		panic("width must be >= 1")
-	}
-
+// Dump returns a HexII formatted string representing the given data. For
+// more control over the output, use a Dumper.
+func Dump(data []byte) string {
 	buf := new(bytes.Buffer)
-	d := Dumper(buf, width, int64(len(data))).(*dumper)
-
+	d := Dumper(buf, 16, 4, false)
 	d.Write(data)
 	d.Close()
 	return buf.String()
 }
 
 // Dumper returns a new io.WriteCloser that streams the given data to the
-// output in HexII format. If sizeHint is positive it should represent that
-// size of the data that will be written, so that the number of digits in
-// the offset can be dimensioned accordingly.
-func Dumper(out io.Writer, width int, sizeHint int64) io.WriteCloser {
+// output in HexII format. The width parameter set the number of bytes shown
+// per line, offsetDigits sets how many digits are used when formatting
+// offsets, and the header bool controls whether a ruler is printed above
+// the hex dump.
+func Dumper(out io.Writer, width, offsetDigits int, header bool) io.WriteCloser {
+	if width < 1 {
+		panic("width must be >= 1")
+	}
+
 	d := &dumper{
 		out:       out,
 		width:     width,
+		header:    header,
 		lineLen:   3 * width,
 		cleanLine: make([]byte, 3*width),
 		buffer:    new(bytes.Buffer),
 		readbuf:   make([]byte, width),
-		prefixLen: 6,
+		prefixLen: offsetDigits,
 	}
 	for i := range d.cleanLine {
 		d.cleanLine[i] = ' '
 	}
-	if sizeHint > 0 {
-		d.prefixLen = 1
-		maxLen := int64(16)
-		for maxLen <= sizeHint {
-			maxLen <<= 4
-			d.prefixLen++
-		}
-	}
-
 	return d
 }
 
 type dumper struct {
 	out       io.Writer
 	width     int
+	header    bool
 	lineLen   int
 	cleanLine []byte
 	buffer    *bytes.Buffer
@@ -78,7 +71,7 @@ func (d *dumper) Close() error {
 
 func (d *dumper) process() {
 	for d.buffer.Len() >= d.width {
-		if d.offset == 0 {
+		if d.header && d.offset == 0 {
 			d.ruler()
 		}
 
@@ -102,7 +95,7 @@ func (d *dumper) process() {
 }
 
 func (d *dumper) final() {
-	if d.offset == 0 {
+	if d.header && d.offset == 0 {
 		d.ruler()
 	}
 
