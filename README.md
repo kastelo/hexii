@@ -1,6 +1,10 @@
 hexii
 =====
 
+```
+import "kastelo.dev/hexii"
+```
+
 Package hexii formats data in the HexII format.
 
 HexII format: https://github.com/gunmetalbackupgooglecode/corkami/tree/master/src/HexII
